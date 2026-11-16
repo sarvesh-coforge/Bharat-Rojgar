@@ -1,4 +1,4 @@
-#      (भारत रोज़गार)
+# Bharat Rojgar (भारत रोज़गार)
 ## Official Indian Government Jobs, Results, Admit Cards & Recruitment Portal 2026
 
 A modern, production-ready, full-stack government recruitment and examination results portal inspired by the familiar information architecture of Sarkari Result, enhanced with a professional design system, dark mode, English/Hindi multilingual routing, Prisma ORM (SQLite/PostgreSQL), automated official-source scrapers, duplicate detection, and a secure administrator dashboard with pending approval workflows.

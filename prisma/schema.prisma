@@ -1,6 +1,4 @@
-// Prisma schema for Bharat Rojgar Portal
-// Designed for seamless local execution (SQLite) and production PostgreSQL compatibility
-
+// Production PostgreSQL schema for Bharat Rojgar Portal
 generator client {
   provider = "prisma-client-js"
 }
@@ -46,8 +44,8 @@ model Organization {
   nameHi        String?
   shortName     String         @unique // e.g. UPSC, SSC, RRB, IBPS, NTA, UPSSSC, UPPSC
   websiteUrl    String
-  state         String         @default("Central") // Central, Uttar Pradesh, Bihar, etc.
-  category      String         @default("Recruitment Board") // Recruitment Board, Commission, University, Banking, Police, Defense
+  state         String         @default("Central")
+  category      String         @default("Recruitment Board")
   logoUrl       String?
   notifications Notification[]
   createdAt     DateTime       @default(now())
@@ -61,15 +59,15 @@ model Organization {
 model OfficialSource {
   id                   String           @id @default(cuid())
   name                 String           @unique
-  code                 String           @unique // e.g. UPSC, SSC, RRB, IBPS, NTA, UPSSSC, UPPSC
+  code                 String           @unique
   websiteUrl           String
   feedUrl              String?
   sitemapUrl           String?
-  monitorType          String           @default("HTML_SCRAPE") // RSS, SITEMAP, HTML_SCRAPE, OFFICIAL_API
-  checkIntervalMinutes Int              @default(120) // 2 hours default
+  monitorType          String           @default("HTML_SCRAPE")
+  checkIntervalMinutes Int              @default(120)
   isActive             Boolean          @default(true)
   lastFetchedAt        DateTime?
-  lastStatus           String?          @default("IDLE") // SUCCESS, ERROR, RUNNING
+  lastStatus           String?          @default("IDLE")
   errorCount           Int              @default(0)
   fetchLogs            SourceFetchLog[]
   notifications        Notification[]
@@ -84,7 +82,7 @@ model SourceFetchLog {
   sourceId     String
   source       OfficialSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
   fetchedAt    DateTime       @default(now())
-  status       String // SUCCESS, ERROR, PARTIAL
+  status       String
   itemsFound   Int            @default(0)
   itemsNew     Int            @default(0)
   errorMessage String?
@@ -107,31 +105,28 @@ model Notification {
   category           NotificationCategory  @relation(fields: [categoryId], references: [id])
   officialSourceId   String?
   officialSource     OfficialSource?       @relation(fields: [officialSourceId], references: [id])
-  
-  // Recruitment & Examination Details
+
   postName           String?
   vacancyCount       Int?                  @default(0)
-  vacancyBreakdown   String?               // JSON string for category breakdown (Gen, OBC, SC, ST, EWS)
+  vacancyBreakdown   String?
   qualification      String?
   qualificationHi    String?
   salary             String?
   salaryHi           String?
   ageLimit           String?
   ageLimitHi         String?
-  feeDetails         String?               // JSON string for Gen/OBC: 100, SC/ST: 0, etc.
+  feeDetails         String?
   selectionProcess   String?
   selectionProcessHi String?
-  
-  // Important Dates
-  importantDates     String?               // JSON string of all date milestones
+
+  importantDates     String?
   applicationStartDate DateTime?
   applicationEndDate   DateTime?
   feeLastDate          DateTime?
-  examDate             String?             // e.g. "June 2026" or exact date
+  examDate             String?
   admitCardDate        String?
   resultDate           String?
 
-  // Official Links (STRICT: Points ONLY to official government domains)
   applyOnlineUrl     String?
   officialPdfUrl     String?
   officialWebsiteUrl String
@@ -143,23 +138,21 @@ model Notification {
   scoreCardUrl       String?
   cutoffPdfUrl       String?
 
-  // Source Tracking & Approvals
-  sourceReference    String?               // Unique ID from source to prevent duplicate ingestion
-  verificationStatus String                @default("PENDING") // PENDING, VERIFIED, REJECTED
-  publicationStatus  String                @default("DRAFT")   // DRAFT, PUBLISHED, ARCHIVED
-  verifiedBy         String?
-  verifiedAt         DateTime?
-  rejectionReason    String?
+  sourceReference     String?
+  verificationStatus  String                @default("PENDING")
+  publicationStatus   String                @default("DRAFT")
+  verifiedBy          String?
+  verifiedAt          DateTime?
+  rejectionReason     String?
 
-  // Portal Presentation
-  isFeatured         Boolean               @default(false)
-  isTrending         Boolean               @default(false)
-  viewCount          Int                   @default(0)
-  publishedAt        DateTime?
-  createdAt          DateTime              @default(now())
-  updatedAt          DateTime              @updatedAt
+  isFeatured          Boolean               @default(false)
+  isTrending          Boolean               @default(false)
+  viewCount           Int                   @default(0)
+  publishedAt         DateTime?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
 
-  updates            NotificationUpdate[]
+  updates             NotificationUpdate[]
 
   @@index([slug])
   @@index([organizationId])
@@ -178,7 +171,7 @@ model NotificationUpdate {
   title          String
   titleHi        String?
   updateDate     DateTime     @default(now())
-  updateType     String       @default("CORRIGENDUM") // DATE_EXTENDED, CORRIGENDUM, ADMIT_CARD_OUT, RESULT_OUT
+  updateType     String       @default("CORRIGENDUM")
   details        String?
   pdfUrl         String?
   createdAt      DateTime     @default(now())
@@ -192,7 +185,7 @@ model Advertisement {
   title       String
   bannerUrl   String
   targetUrl   String
-  placement   String    @default("HOMEPAGE_TOP") // HEADER, SIDEBAR_RIGHT, HOMEPAGE_TOP, HOMEPAGE_MIDDLE, FOOTER
+  placement   String    @default("HOMEPAGE_TOP")
   startDate   DateTime  @default(now())
   endDate     DateTime?
   isActive    Boolean   @default(true)
@@ -207,7 +200,7 @@ model Advertisement {
 
 model SEOSettings {
   id                 String   @id @default(cuid())
-  pagePath           String   @unique // e.g. "/", "/latest-jobs", "/results"
+  pagePath           String   @unique
   metaTitle          String
   metaTitleHi        String?
   metaDescription    String
@@ -215,7 +208,7 @@ model SEOSettings {
   canonicalUrl       String?
   ogImage            String?
   keywords           String?
-  structuredDataType String?  @default("WebSite") // JobPosting, WebSite, ItemList
+  structuredDataType String?  @default("WebSite")
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
@@ -234,8 +227,8 @@ model SiteSettings {
 
 model Translation {
   id        String   @id @default(cuid())
-  locale    String   // "en" or "hi"
-  namespace String   // "common", "nav", "jobs", "admin"
+  locale    String
+  namespace String
   key       String
   value     String
   createdAt DateTime @default(now())
@@ -250,10 +243,10 @@ model AuditLog {
   userId     String?
   user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   userName   String?
-  action     String   // CREATE_NOTIFICATION, PUBLISH, APPROVE, REJECT, DELETE, SYNC_SOURCE
-  entityType String   // NOTIFICATION, SOURCE, ADVERTISEMENT, USER, SETTING
+  action     String
+  entityType String
   entityId   String?
-  details    String?  // JSON formatted details of the change
+  details    String?
   ipAddress  String?
   createdAt  DateTime @default(now())
 
