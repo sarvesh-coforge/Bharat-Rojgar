@@ -1,0 +1,257 @@
+// Production PostgreSQL schema for Bharat Rojgar Portal
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         String     @default("ADMIN") // ADMIN, EDITOR, VIEWER
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auditLogs    AuditLog[]
+
+  @@map("users")
+}
+
+model NotificationCategory {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  nameHi        String
+  slug          String         @unique
+  description   String?
+  sortOrder     Int            @default(0)
+  icon          String?
+  notifications Notification[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([slug])
+  @@map("notification_categories")
+}
+
+model Organization {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  nameHi        String?
+  shortName     String         @unique // e.g. UPSC, SSC, RRB, IBPS, NTA, UPSSSC, UPPSC
+  websiteUrl    String
+  state         String         @default("Central")
+  category      String         @default("Recruitment Board")
+  logoUrl       String?
+  notifications Notification[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([shortName])
+  @@index([state])
+  @@map("organizations")
+}
+
+model OfficialSource {
+  id                   String           @id @default(cuid())
+  name                 String           @unique
+  code                 String           @unique
+  websiteUrl           String
+  feedUrl              String?
+  sitemapUrl           String?
+  monitorType          String           @default("HTML_SCRAPE")
+  checkIntervalMinutes Int              @default(120)
+  isActive             Boolean          @default(true)
+  lastFetchedAt        DateTime?
+  lastStatus           String?          @default("IDLE")
+  errorCount           Int              @default(0)
+  fetchLogs            SourceFetchLog[]
+  notifications        Notification[]
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  @@map("official_sources")
+}
+
+model SourceFetchLog {
+  id           String         @id @default(cuid())
+  sourceId     String
+  source       OfficialSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  fetchedAt    DateTime       @default(now())
+  status       String
+  itemsFound   Int            @default(0)
+  itemsNew     Int            @default(0)
+  errorMessage String?
+  details      String?
+
+  @@index([sourceId])
+  @@map("source_fetch_logs")
+}
+
+model Notification {
+  id                 String                @id @default(cuid())
+  title              String
+  titleHi            String?
+  slug               String                @unique
+  description        String?
+  descriptionHi      String?
+  organizationId     String
+  organization       Organization          @relation(fields: [organizationId], references: [id])
+  categoryId         String
+  category           NotificationCategory  @relation(fields: [categoryId], references: [id])
+  officialSourceId   String?
+  officialSource     OfficialSource?       @relation(fields: [officialSourceId], references: [id])
+  
+  postName           String?
+  vacancyCount       Int?                  @default(0)
+  vacancyBreakdown   String?
+  qualification      String?
+  qualificationHi    String?
+  salary             String?
+  salaryHi           String?
+  ageLimit           String?
+  ageLimitHi         String?
+  feeDetails         String?
+  selectionProcess   String?
+  selectionProcessHi String?
+  
+  importantDates     String?
+  applicationStartDate DateTime?
+  applicationEndDate   DateTime?
+  feeLastDate          DateTime?
+  examDate             String?
+  admitCardDate        String?
+  resultDate           String?
+
+  applyOnlineUrl     String?
+  officialPdfUrl     String?
+  officialWebsiteUrl String
+  resultUrl          String?
+  admitCardUrl       String?
+  answerKeyUrl       String?
+  syllabusUrl        String?
+  examCityUrl        String?
+  scoreCardUrl       String?
+  cutoffPdfUrl       String?
+
+  sourceReference    String?
+  verificationStatus String                @default("PENDING")
+  publicationStatus  String                @default("DRAFT")
+  verifiedBy         String?
+  verifiedAt         DateTime?
+  rejectionReason    String?
+
+  isFeatured         Boolean               @default(false)
+  isTrending         Boolean               @default(false)
+  viewCount          Int                   @default(0)
+  publishedAt        DateTime?
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+
+  updates            NotificationUpdate[]
+
+  @@index([slug])
+  @@index([organizationId])
+  @@index([categoryId])
+  @@index([verificationStatus])
+  @@index([publicationStatus])
+  @@index([applicationEndDate])
+  @@index([publishedAt])
+  @@map("notifications")
+}
+
+model NotificationUpdate {
+  id             String       @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  title          String
+  titleHi        String?
+  updateDate     DateTime     @default(now())
+  updateType     String       @default("CORRIGENDUM")
+  details        String?
+  pdfUrl         String?
+  createdAt      DateTime     @default(now())
+
+  @@index([notificationId])
+  @@map("notification_updates")
+}
+
+model Advertisement {
+  id          String    @id @default(cuid())
+  title       String
+  bannerUrl   String
+  targetUrl   String
+  placement   String    @default("HOMEPAGE_TOP")
+  startDate   DateTime  @default(now())
+  endDate     DateTime?
+  isActive    Boolean   @default(true)
+  clickCount  Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([placement])
+  @@index([isActive])
+  @@map("advertisements")
+}
+
+model SEOSettings {
+  id                 String   @id @default(cuid())
+  pagePath           String   @unique
+  metaTitle          String
+  metaTitleHi        String?
+  metaDescription    String
+  metaDescriptionHi  String?
+  canonicalUrl       String?
+  ogImage            String?
+  keywords           String?
+  structuredDataType String?  @default("WebSite")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("seo_settings")
+}
+
+model SiteSettings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model Translation {
+  id        String   @id @default(cuid())
+  locale    String
+  namespace String
+  key       String
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([locale, namespace, key])
+  @@map("translations")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userName   String?
+  action     String
+  entityType String
+  entityId   String?
+  details    String?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
