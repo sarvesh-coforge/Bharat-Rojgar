@@ -16,8 +16,8 @@ export function DisclaimerBanner({ isHindi }: { isHindi: boolean }) {
           </h4>
           <p className="text-xs sm:text-[13px] text-amber-900/90 dark:text-amber-300/90 mt-1 leading-relaxed">
             {isHindi
-              ? 'भारत रोज़गार (Bharat Rojgar) केवल एक स्वतंत्र सूचनात्मक मंच है। यह पोर्टल किसी भी सरकारी नौकरी का आवेदन पत्र, व्यक्तिगत दस्तावेज अथवा परीक्षा शुल्क स्वीकार नहीं करता है। सभी अभ्यर्थी आवेदन करने, एडमिट कार्ड डाउनलोड करने एवं परिणाम देखने हेतु केवल इस पृष्ठ पर दिए गए आधिकारिक सरकारी लिंक (जैसे: upsc.gov.in, ssc.gov.in, indianrailways.gov.in) पर ही जाएं।'
-              : 'Bharat Rojgar is strictly an informational and recruitment notification aggregator. This website NEVER collects candidate applications, examination fees, or confidential documents. Aspirants are advised to complete form submissions, fee payments, and hall ticket downloads solely on the verified official government portals linked on our pages.'}
+              ? 'सरकारी सिलेक्शन (Sarkari Selection) केवल एक स्वतंत्र सूचनात्मक मंच है। यह पोर्टल किसी भी सरकारी नौकरी का आवेदन पत्र, व्यक्तिगत दस्तावेज अथवा परीक्षा शुल्क स्वीकार नहीं करता है। सभी अभ्यर्थी आवेदन करने, एडमिट कार्ड डाउनलोड करने एवं परिणाम देखने हेतु केवल इस पृष्ठ पर दिए गए आधिकारिक सरकारी लिंक (जैसे: upsc.gov.in, ssc.gov.in, indianrailways.gov.in) पर ही जाएं।'
+              : 'Sarkari Selection is strictly an informational and recruitment notification aggregator. This website NEVER collects candidate applications, examination fees, or confidential documents. Aspirants are advised to complete form submissions, fee payments, and hall ticket downloads solely on the verified official government portals linked on our pages.'}
           </p>
 
           <div className="mt-2.5 flex flex-wrap items-center gap-3 text-[11px] font-semibold text-amber-950 dark:text-amber-200">

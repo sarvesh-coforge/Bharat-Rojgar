@@ -42,11 +42,11 @@ export function AdminSidebar() {
         <div className="p-4 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded bg-red-700 flex items-center justify-center font-black text-white text-xs">
-              BR
+              SS
             </div>
             <div>
               <div className="font-extrabold text-sm leading-tight text-white tracking-wide">
-                BHARAT ROJGAR
+                SARKARI SELECTION
               </div>
               <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
                 Admin Control Desk

@@ -30,8 +30,8 @@ export default async function HomePage({
           <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <span className="font-semibold">
             {isHindi
-              ? 'स्वागत है! भारत रोज़गार: 100% प्रमाणित आधिकारिक सरकारी नौकरी, रिजल्ट एवं एडमिट कार्ड पोर्टल 2026'
-              : 'Welcome to Bharat Rojgar: 100% Verified Official Government Jobs, Results & Admit Card Portal 2026'}
+              ? 'स्वागत है! सरकारी सिलेक्शन: 100% प्रमाणित आधिकारिक सरकारी नौकरी, रिजल्ट एवं एडमिट कार्ड पोर्टल 2026'
+              : 'Welcome to Sarkari Selection: 100% Verified Official Government Jobs, Results & Admit Card Portal 2026'}
           </span>
         </div>
         <div className="text-[11px] font-bold text-red-800 dark:text-yellow-400 uppercase tracking-wider self-start sm:self-center shrink-0">

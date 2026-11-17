@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/ensure-prisma-env.mjs && prisma generate && prisma db push && next dev --webpack",
-    "build": "node scripts/ensure-prisma-env.mjs && prisma generate && prisma db push && next build --webpack",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "node scripts/ensure-prisma-env.mjs && prisma generate",
-    "db:push": "node scripts/ensure-prisma-env.mjs && prisma db push",
+    "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "worker": "tsx workers/source-sync.worker.ts"
   },

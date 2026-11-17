@@ -6,7 +6,7 @@ import { ShieldCheck, Lock, Mail, AlertCircle, Loader2, ArrowRight } from 'lucid
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@bharatrojgar.gov.in');
+  const [email, setEmail] = useState('admin@sarkariselection.com');
   const [password, setPassword] = useState('AdminPassword@2026');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
             <ShieldCheck className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-2xl font-black text-white tracking-tight uppercase">
-            BHARAT ROJGAR
+            SARKARI SELECTION
           </h1>
           <p className="text-xs font-semibold text-amber-400 uppercase tracking-widest mt-1">
             Government Jobs Portal • Admin Console
@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@bharatrojgar.gov.in"
+                placeholder="admin@sarkariselection.com"
                 className="w-full pl-9 pr-3 py-2 rounded bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-600"
               />
             </div>
@@ -95,8 +95,8 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="p-2.5 rounded bg-amber-950/30 border border-amber-500/30 text-[11px] text-amber-300">
-            <strong>Default Seed Credentials:</strong>
-            <div className="mt-0.5">Email: <span className="font-mono text-white">admin@bharatrojgar.gov.in</span></div>
+            <strong>Default Administrator Credentials:</strong>
+            <div className="mt-0.5">Email: <span className="font-mono text-white">admin@sarkariselection.com</span></div>
             <div>Password: <span className="font-mono text-white">AdminPassword@2026</span></div>
           </div>
 

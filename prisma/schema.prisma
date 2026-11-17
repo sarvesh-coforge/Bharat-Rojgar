@@ -1,15 +1,15 @@
-// Production PostgreSQL schema for Bharat Rojgar Portal
+// MongoDB schema for Sarkari Selection Portal
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String     @id @default(cuid())
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
   email        String     @unique
   name         String
   passwordHash String
@@ -23,7 +23,7 @@ model User {
 }
 
 model NotificationCategory {
-  id            String         @id @default(cuid())
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   name          String         @unique
   nameHi        String
   slug          String         @unique
@@ -34,15 +34,14 @@ model NotificationCategory {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
-  @@index([slug])
   @@map("notification_categories")
 }
 
 model Organization {
-  id            String         @id @default(cuid())
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   name          String         @unique
   nameHi        String?
-  shortName     String         @unique // e.g. UPSC, SSC, RRB, IBPS, NTA, UPSSSC, UPPSC
+  shortName     String         @unique
   websiteUrl    String
   state         String         @default("Central")
   category      String         @default("Recruitment Board")
@@ -51,13 +50,11 @@ model Organization {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
-  @@index([shortName])
-  @@index([state])
   @@map("organizations")
 }
 
 model OfficialSource {
-  id                   String           @id @default(cuid())
+  id                   String           @id @default(auto()) @map("_id") @db.ObjectId
   name                 String           @unique
   code                 String           @unique
   websiteUrl           String
@@ -78,9 +75,9 @@ model OfficialSource {
 }
 
 model SourceFetchLog {
-  id           String         @id @default(cuid())
-  sourceId     String
-  source       OfficialSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  sourceId     String         @db.ObjectId
+  source       OfficialSource @relation(fields: [sourceId], references: [id])
   fetchedAt    DateTime       @default(now())
   status       String
   itemsFound   Int            @default(0)
@@ -93,33 +90,33 @@ model SourceFetchLog {
 }
 
 model Notification {
-  id                 String                @id @default(cuid())
-  title              String
-  titleHi            String?
-  slug               String                @unique
-  description        String?
-  descriptionHi      String?
-  organizationId     String
-  organization       Organization          @relation(fields: [organizationId], references: [id])
-  categoryId         String
-  category           NotificationCategory  @relation(fields: [categoryId], references: [id])
-  officialSourceId   String?
-  officialSource     OfficialSource?       @relation(fields: [officialSourceId], references: [id])
+  id                   String                @id @default(auto()) @map("_id") @db.ObjectId
+  title                String
+  titleHi              String?
+  slug                 String                @unique
+  description          String?
+  descriptionHi        String?
+  organizationId       String                @db.ObjectId
+  organization         Organization          @relation(fields: [organizationId], references: [id])
+  categoryId           String                @db.ObjectId
+  category             NotificationCategory  @relation(fields: [categoryId], references: [id])
+  officialSourceId     String?               @db.ObjectId
+  officialSource       OfficialSource?       @relation(fields: [officialSourceId], references: [id])
 
-  postName           String?
-  vacancyCount       Int?                  @default(0)
-  vacancyBreakdown   String?
-  qualification      String?
-  qualificationHi    String?
-  salary             String?
-  salaryHi           String?
-  ageLimit           String?
-  ageLimitHi         String?
-  feeDetails         String?
-  selectionProcess   String?
-  selectionProcessHi String?
+  postName             String?
+  vacancyCount         Int?                  @default(0)
+  vacancyBreakdown     String?
+  qualification        String?
+  qualificationHi      String?
+  salary               String?
+  salaryHi             String?
+  ageLimit             String?
+  ageLimitHi           String?
+  feeDetails           String?
+  selectionProcess     String?
+  selectionProcessHi   String?
 
-  importantDates     String?
+  importantDates       String?
   applicationStartDate DateTime?
   applicationEndDate   DateTime?
   feeLastDate          DateTime?
@@ -127,34 +124,33 @@ model Notification {
   admitCardDate        String?
   resultDate           String?
 
-  applyOnlineUrl     String?
-  officialPdfUrl     String?
-  officialWebsiteUrl String
-  resultUrl          String?
-  admitCardUrl       String?
-  answerKeyUrl       String?
-  syllabusUrl        String?
-  examCityUrl        String?
-  scoreCardUrl       String?
-  cutoffPdfUrl       String?
+  applyOnlineUrl       String?
+  officialPdfUrl       String?
+  officialWebsiteUrl   String
+  resultUrl            String?
+  admitCardUrl         String?
+  answerKeyUrl         String?
+  syllabusUrl          String?
+  examCityUrl          String?
+  scoreCardUrl         String?
+  cutoffPdfUrl         String?
 
-  sourceReference     String?
-  verificationStatus  String                @default("PENDING")
-  publicationStatus   String                @default("DRAFT")
-  verifiedBy          String?
-  verifiedAt          DateTime?
-  rejectionReason     String?
+  sourceReference      String?
+  verificationStatus   String                @default("PENDING")
+  publicationStatus    String                @default("DRAFT")
+  verifiedBy           String?
+  verifiedAt           DateTime?
+  rejectionReason      String?
 
-  isFeatured          Boolean               @default(false)
-  isTrending          Boolean               @default(false)
-  viewCount           Int                   @default(0)
-  publishedAt         DateTime?
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
+  isFeatured           Boolean               @default(false)
+  isTrending           Boolean               @default(false)
+  viewCount            Int                   @default(0)
+  publishedAt          DateTime?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 
-  updates             NotificationUpdate[]
+  updates              NotificationUpdate[]
 
-  @@index([slug])
   @@index([organizationId])
   @@index([categoryId])
   @@index([verificationStatus])
@@ -165,9 +161,9 @@ model Notification {
 }
 
 model NotificationUpdate {
-  id             String       @id @default(cuid())
-  notificationId String
-  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  notificationId String       @db.ObjectId
+  notification   Notification @relation(fields: [notificationId], references: [id])
   title          String
   titleHi        String?
   updateDate     DateTime     @default(now())
@@ -181,7 +177,7 @@ model NotificationUpdate {
 }
 
 model Advertisement {
-  id          String    @id @default(cuid())
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   bannerUrl   String
   targetUrl   String
@@ -199,7 +195,7 @@ model Advertisement {
 }
 
 model SEOSettings {
-  id                 String   @id @default(cuid())
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   pagePath           String   @unique
   metaTitle          String
   metaTitleHi        String?
@@ -216,7 +212,7 @@ model SEOSettings {
 }
 
 model SiteSettings {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   key         String   @unique
   value       String
   description String?
@@ -226,7 +222,7 @@ model SiteSettings {
 }
 
 model Translation {
-  id        String   @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   locale    String
   namespace String
   key       String
@@ -239,9 +235,9 @@ model Translation {
 }
 
 model AuditLog {
-  id         String   @id @default(cuid())
-  userId     String?
-  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String?  @db.ObjectId
+  user       User?    @relation(fields: [userId], references: [id])
   userName   String?
   action     String
   entityType String

@@ -38,17 +38,17 @@ export function Header({ locale }: { locale: string }) {
           {/* Emblem Logo */}
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-amber-400 via-orange-500 to-amber-300 p-0.5 shadow-lg flex-shrink-0 flex items-center justify-center">
             <div className="w-full h-full rounded-full bg-[var(--header-bg)] flex flex-col items-center justify-center text-center p-1 border border-white/20">
-              <span className="text-[9px] font-black tracking-widest text-amber-300 leading-none">BHARAT</span>
-              <span className="text-[14px] font-black text-white leading-tight">BR</span>
-              <span className="text-[7px] font-bold text-orange-300 leading-none">PORTAL</span>
+              <span className="text-[8px] font-black tracking-widest text-amber-300 leading-none">SARKARI</span>
+              <span className="text-[12px] font-black text-white leading-tight">SS</span>
+              <span className="text-[7px] font-bold text-orange-300 leading-none">SELECT</span>
             </div>
           </div>
 
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight uppercase drop-shadow-sm font-sans flex items-center gap-2 justify-center md:justify-start">
-              <span>{isHindi ? 'भारत रोज़गार' : 'BHARAT ROJGAR'}</span>
+              <span>{isHindi ? 'सरकारी सिलेक्शन' : 'SARKARI SELECTION'}</span>
               <span className="text-xs bg-amber-400 text-slate-900 font-bold px-1.5 py-0.5 rounded shadow-xs uppercase tracking-normal">
-                .GOV.IN
+                .COM
               </span>
             </h1>
             <p className="text-xs sm:text-sm font-medium text-amber-200 tracking-wide mt-0.5">

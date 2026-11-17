@@ -6,7 +6,7 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'bharat-rojgar-super-secure-production-secret-key-2026-sarkari-portal'
 );
 
-const SESSION_COOKIE_NAME = 'bharat_admin_session';
+const SESSION_COOKIE_NAME = 'sarkari_admin_session';
 
 export interface AdminSession {
   userId: string;
@@ -47,7 +47,9 @@ export async function verifySession(token: string): Promise<AdminSession | null>
 
 export async function getSession(): Promise<AdminSession | null> {
   const cookieStore = await cookies();
-  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const token =
+    cookieStore.get(SESSION_COOKIE_NAME)?.value ||
+    cookieStore.get('bharat_admin_session')?.value;
   if (!token) return null;
   return verifySession(token);
 }

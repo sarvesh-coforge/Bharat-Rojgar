@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import prisma from '@/lib/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bharatrojgar.gov.in';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://sarkariselection.com';
 
   // Base static pages for both en and hi
   const staticRoutes = [

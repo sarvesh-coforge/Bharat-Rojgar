@@ -56,7 +56,9 @@ export async function middleware(request: NextRequest) {
 
   // 2. Admin Route Protection
   if (pathname.startsWith('/admin')) {
-    const token = request.cookies.get('bharat_admin_session')?.value;
+    const token =
+      request.cookies.get('sarkari_admin_session')?.value ||
+      request.cookies.get('bharat_admin_session')?.value;
 
     if (pathname === '/admin/login') {
       if (token) {

@@ -21,16 +21,16 @@ export function Footer({ isHindi }: { isHindi: boolean }) {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-7 h-7 rounded-full bg-red-700 flex items-center justify-center text-white font-extrabold text-xs">
-                BR
+                SS
               </div>
               <span className="font-extrabold text-white text-sm tracking-wide">
-                BHARAT ROJGAR
+                SARKARI SELECTION
               </span>
             </div>
             <p className="text-slate-400 leading-relaxed">
               {isHindi
-                ? 'भारत रोज़गार भारत का सबसे विश्वसनीय सरकारी नौकरी, परीक्षा परिणाम एवं प्रवेश पत्र सूचना मंच है। यहाँ सभी सूचनाएं आधिकारिक सरकारी स्रोतों से सत्यापित की जाती हैं।'
-                : 'Bharat Rojgar is India\'s dedicated government recruitment and examination result aggregation portal, delivering verified alerts across Central and State services.'}
+                ? 'सरकारी सिलेक्शन भारत का सबसे विश्वसनीय सरकारी नौकरी, परीक्षा परिणाम एवं प्रवेश पत्र सूचना मंच है। यहाँ सभी सूचनाएं आधिकारिक सरकारी स्रोतों से सत्यापित की जाती हैं।'
+                : 'Sarkari Selection is India\'s trusted government recruitment and examination result aggregation portal, delivering verified alerts across Central and State services.'}
             </p>
             <div className="mt-3 flex items-center gap-1.5 text-amber-400 font-semibold">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -107,7 +107,7 @@ export function Footer({ isHindi }: { isHindi: boolean }) {
             <div className="pt-2 border-t border-slate-800 flex flex-col gap-1.5 text-[11px]">
               <span className="flex items-center gap-1 text-slate-400">
                 <Mail className="w-3 h-3 text-amber-400" />
-                contact@bharatrojgar.gov.in
+                contact@sarkariselection.com
               </span>
               <a
                 href="/admin/login"
@@ -123,7 +123,7 @@ export function Footer({ isHindi }: { isHindi: boolean }) {
         {/* Bottom Bar */}
         <div className="border-t border-slate-800 pt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2 text-center sm:text-left">
           <div>
-            © 2026 Bharat Rojgar Portal. {isHindi ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
+            © 2026 Sarkari Selection. {isHindi ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
           </div>
           <div className="flex items-center gap-3">
             <span>Official Recruitment Aggregator</span>

@@ -1,7 +1,7 @@
 {
   "common": {
-    "siteName": "Bharat Rojgar",
-    "siteHindiName": "भारत रोज़गार",
+    "siteName": "Sarkari Selection",
+    "siteHindiName": "सरकारी सिलेक्शन",
     "tagline": "Official Government Jobs, Results, Admit Cards & Recruitment Portal 2026",
     "home": "Home",
     "latestJobs": "Latest Jobs",
@@ -30,7 +30,7 @@
     "examCitySlip": "Exam City Intimation Slip",
     "downloadAnswerKey": "Download Answer Key",
     "disclaimer": "Official Information Notice",
-    "disclaimerText": "Bharat Rojgar is an independent informational and job notification portal. This platform NEVER collects recruitment applications, candidate fees, or login credentials. All candidates must apply exclusively through the respective official government portals provided below.",
+    "disclaimerText": "Sarkari Selection is an independent informational and job notification portal. This platform NEVER collects recruitment applications, candidate fees, or login credentials. All candidates must apply exclusively through the respective official government portals provided below.",
     "totalPost": "Total Post",
     "eligibility": "Eligibility Criteria",
     "lastDate": "Last Date",
